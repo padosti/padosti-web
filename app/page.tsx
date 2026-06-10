@@ -48,7 +48,7 @@ export default function Home() {
           setMessageTypeFn("error");
         }
       } else {
-        setMessageFn("🎉 You're on the list! We'll notify you at launch.");
+        setMessageFn("🎉 You're on the list! We'll notify you when access opens.");
         setMessageTypeFn("success");
         setEmailFn("");
       }
@@ -62,21 +62,21 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative overflow-hidden">
-      {/* Background gradient layers */}
-      <div className="fixed inset-0 -z-10" style={{
-        background: "radial-gradient(ellipse at top left, rgba(232,119,34,0.14), transparent 50%), radial-gradient(ellipse at bottom right, rgba(11,110,110,0.10), transparent 50%), linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 30%, #FFF8EE 70%, #FFEDD8 100%)"
+      {/* Background gradient layer - only behind hero */}
+      <div className="absolute top-0 left-0 right-0 h-[600px] -z-10" style={{
+        background: "radial-gradient(ellipse at top left, rgba(232,119,34,0.14), transparent 50%), radial-gradient(ellipse at bottom right, rgba(11,110,110,0.10), transparent 50%), linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 100%)"
       }}></div>
 
-      {/* Floating orbs */}
+      {/* Floating orbs - decorative */}
       <div className="absolute top-16 -right-12 w-48 h-48 rounded-full -z-10" style={{
         background: "radial-gradient(circle, rgba(232,119,34,0.18), transparent 70%)"
       }}></div>
-      <div className="absolute top-96 -left-16 w-56 h-56 rounded-full -z-10" style={{
+      <div className="absolute top-40 -left-16 w-56 h-56 rounded-full -z-10" style={{
         background: "radial-gradient(circle, rgba(11,110,110,0.14), transparent 70%)"
       }}></div>
 
       {/* Header */}
-      <header className="px-4 md:px-12 py-4 md:py-5 flex items-center justify-between backdrop-blur-md border-b" style={{
+      <header className="px-4 md:px-12 py-4 md:py-5 flex items-center justify-between backdrop-blur-md border-b relative" style={{
         background: "rgba(255,248,238,0.7)",
         borderColor: "rgba(31,41,55,0.06)"
       }}>
@@ -98,13 +98,13 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 md:px-6 pt-8 md:pt-14 pb-4 md:pb-8 text-center relative">
+      <section className="px-4 md:px-6 pt-8 md:pt-14 pb-6 md:pb-10 text-center relative">
         <div className="inline-block backdrop-blur-md text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-4 md:mb-5 font-medium border" style={{
           background: "rgba(255,255,255,0.75)",
           color: "#0B6E6E",
           borderColor: "rgba(11,110,110,0.15)"
         }}>
-          🪔 Launching summer 2026 · Free to join
+          🪔 First neighbours getting access now · Free to join
         </div>
 
         <h1 className="text-3xl md:text-5xl font-medium leading-tight mb-3 md:mb-4 text-charcoal" style={{ letterSpacing: "-0.8px" }}>
@@ -136,7 +136,8 @@ export default function Home() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
-            className="flex-1 px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base bg-transparent outline-none text-charcoal disabled:opacity-50 min-w-0"
+            className="flex-1 px-3 md:px-4 py-2.5 md:py-3 bg-transparent outline-none text-charcoal disabled:opacity-50 min-w-0"
+            style={{ fontSize: "16px" }}
           />
           <button
             type="submit"
@@ -168,17 +169,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Rent / Share Section */}
-      <section className="px-4 md:px-6 relative -mb-8 z-10">
-        <div className="bg-white rounded-t-3xl px-5 md:px-12 pt-6 md:pt-10 pb-10 md:pb-14 border border-b-0 max-w-3xl mx-auto" style={{
-          boxShadow: "0 -10px 40px rgba(31,41,55,0.06)",
-          borderColor: "rgba(31,41,55,0.06)"
-        }}>
-          <div className="text-center mb-5 md:mb-7">
+      {/* Rent / Share Section - WHITE SPOTLIGHT */}
+      <section className="px-4 md:px-6 py-10 md:py-14 bg-white relative" style={{
+        boxShadow: "0 -4px 20px rgba(31,41,55,0.04)",
+        borderTop: "1px solid rgba(31,41,55,0.06)"
+      }}>
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-6 md:mb-8">
             <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#E87722" }}>
               ✨ Choose your vibe
             </div>
-            <h2 className="text-xl md:text-3xl font-medium mt-1.5 md:mt-2" style={{ letterSpacing: "-0.5px" }}>
+            <h2 className="text-2xl md:text-3xl font-medium mt-2" style={{ letterSpacing: "-0.5px" }}>
               Rent it · Or share for free
             </h2>
           </div>
@@ -219,15 +220,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories Section - Icon Grid */}
-      <section id="categories" className="px-4 md:px-6 py-10 md:py-14 pt-14 md:pt-20" style={{
-        background: "linear-gradient(180deg, white 0%, #FFF8EE 100%)"
+      {/* Elegant Divider */}
+      <div className="bg-white py-5 md:py-6 flex items-center justify-center">
+        <div className="inline-flex items-center gap-3 text-charcoal/30">
+          <span className="w-8 h-px bg-charcoal/15"></span>
+          <span className="text-base">🪔</span>
+          <span className="w-8 h-px bg-charcoal/15"></span>
+        </div>
+      </div>
+
+      {/* Categories Section - PEACH BACKGROUND */}
+      <section id="categories" className="px-4 md:px-6 py-10 md:py-14" style={{
+        background: "linear-gradient(180deg, #FFF1DC 0%, #FFEDD8 100%)",
+        borderTop: "1px solid rgba(31,41,55,0.06)"
       }}>
         <div className="text-center mb-6 md:mb-8 max-w-6xl mx-auto">
           <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#E87722" }}>
             📦 What neighbours share
           </div>
-          <h2 className="text-xl md:text-3xl font-medium mt-1.5 md:mt-2" style={{ letterSpacing: "-0.5px" }}>
+          <h2 className="text-2xl md:text-3xl font-medium mt-2" style={{ letterSpacing: "-0.5px" }}>
             From everyday to once-a-year
           </h2>
         </div>
@@ -244,8 +255,8 @@ export default function Home() {
           <CategoryTile icon="✈️" title="Travel" />
         </div>
 
-        <p className="text-center text-xs md:text-sm text-charcoal/55 mt-5 md:mt-7 max-w-2xl mx-auto px-4">
-          From Instant Pots to mandap setups · pressure cookers to telescopes · 100s of items
+        <p className="text-center text-xs md:text-sm text-charcoal/65 mt-6 md:mt-7 max-w-xl mx-auto px-4 leading-relaxed">
+          And anything else you can think of — your padosi has it covered.
         </p>
       </section>
 
@@ -257,7 +268,7 @@ export default function Home() {
           <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.6)" }}>
             🔄 How it works
           </div>
-          <h2 className="text-xl md:text-3xl font-medium mt-1.5 md:mt-2 text-white" style={{ letterSpacing: "-0.5px" }}>
+          <h2 className="text-2xl md:text-3xl font-medium mt-2 text-white" style={{ letterSpacing: "-0.5px" }}>
             Three steps. Done.
           </h2>
         </div>
@@ -270,7 +281,7 @@ export default function Home() {
       </section>
 
       {/* Second Email Form */}
-      <section id="join" className="px-4 md:px-6 py-7 md:py-10 text-center" style={{
+      <section id="join" className="px-4 md:px-6 py-8 md:py-10 text-center" style={{
         background: "linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 100%)"
       }}>
         <h3 className="text-lg md:text-2xl font-medium mb-2" style={{ letterSpacing: "-0.5px" }}>
@@ -294,7 +305,8 @@ export default function Home() {
             value={email2}
             onChange={(e) => setEmail2(e.target.value)}
             disabled={loading2}
-            className="flex-1 px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base bg-transparent outline-none text-charcoal disabled:opacity-50 min-w-0"
+            className="flex-1 px-3 md:px-4 py-2.5 md:py-3 bg-transparent outline-none text-charcoal disabled:opacity-50 min-w-0"
+            style={{ fontSize: "16px" }}
           />
           <button
             type="submit"
@@ -329,8 +341,8 @@ export default function Home() {
 function CategoryTile({ icon, title }: { icon: string; title: string }) {
   return (
     <div className="rounded-2xl bg-white p-3 md:p-5 border text-center hover:shadow-md transition-shadow cursor-default" style={{
-      borderColor: "rgba(31,41,55,0.06)",
-      boxShadow: "0 2px 8px rgba(31,41,55,0.03)"
+      borderColor: "rgba(31,41,55,0.08)",
+      boxShadow: "0 2px 8px rgba(31,41,55,0.04)"
     }}>
       <div className="text-3xl md:text-4xl mb-1.5 md:mb-2">{icon}</div>
       <div className="font-semibold text-xs md:text-sm text-charcoal">{title}</div>
