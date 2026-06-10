@@ -5,76 +5,130 @@ import { supabase } from "@/lib/supabase";
 
 export default function Home() {
   const [email, setEmail] = useState("");
+  const [email2, setEmail2] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
+  const [message2, setMessage2] = useState("");
+  const [messageType2, setMessageType2] = useState<"success" | "error" | "">("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (
+    e: React.FormEvent,
+    emailValue: string,
+    setEmailFn: (v: string) => void,
+    setLoadingFn: (v: boolean) => void,
+    setMessageFn: (v: string) => void,
+    setMessageTypeFn: (v: "success" | "error" | "") => void
+  ) => {
     e.preventDefault();
-    setMessage("");
-    setMessageType("");
+    setMessageFn("");
+    setMessageTypeFn("");
 
-    // Email validation
-    if (!email || !email.includes("@") || !email.includes(".")) {
-      setMessage("Please enter a valid email address.");
-      setMessageType("error");
+    if (!emailValue || !emailValue.includes("@") || !emailValue.includes(".")) {
+      setMessageFn("Please enter a valid email address.");
+      setMessageTypeFn("error");
       return;
     }
 
-    setLoading(true);
+    setLoadingFn(true);
 
     try {
       const { error } = await supabase
         .from("signups")
-        .insert({ email: email.toLowerCase().trim(), source: "landing_page" });
+        .insert({ email: emailValue.toLowerCase().trim(), source: "landing_page" });
 
       if (error) {
-        // Handle duplicate email
         if (error.code === "23505") {
-          setMessage("You're already on the list! 🎉");
-          setMessageType("success");
-          setEmail("");
+          setMessageFn("You're already on the list! 🎉");
+          setMessageTypeFn("success");
+          setEmailFn("");
         } else {
-          setMessage("Something went wrong. Please try again.");
-          setMessageType("error");
+          setMessageFn("Something went wrong. Please try again.");
+          setMessageTypeFn("error");
         }
       } else {
-        setMessage("🎉 You're on the list! We'll notify you at launch.");
-        setMessageType("success");
-        setEmail("");
+        setMessageFn("🎉 You're on the list! We'll notify you at launch.");
+        setMessageTypeFn("success");
+        setEmailFn("");
       }
     } catch (err) {
-      setMessage("Something went wrong. Please try again.");
-      setMessageType("error");
+      setMessageFn("Something went wrong. Please try again.");
+      setMessageTypeFn("error");
     } finally {
-      setLoading(false);
+      setLoadingFn(false);
     }
   };
 
   return (
-    <main className="min-h-screen bg-cream">
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Background gradient layers */}
+      <div className="fixed inset-0 -z-10" style={{
+        background: "radial-gradient(ellipse at top left, rgba(232,119,34,0.14), transparent 50%), radial-gradient(ellipse at bottom right, rgba(11,110,110,0.10), transparent 50%), linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 30%, #FFF8EE 70%, #FFEDD8 100%)"
+      }}></div>
+
+      {/* Floating orbs */}
+      <div className="absolute top-16 -right-12 w-48 h-48 rounded-full -z-10" style={{
+        background: "radial-gradient(circle, rgba(232,119,34,0.18), transparent 70%)"
+      }}></div>
+      <div className="absolute top-96 -left-16 w-56 h-56 rounded-full -z-10" style={{
+        background: "radial-gradient(circle, rgba(11,110,110,0.14), transparent 70%)"
+      }}></div>
+
       {/* Header */}
-      <header className="px-6 py-6 md:px-12">
-        <h1 className="text-2xl font-bold text-marigold">Padosti</h1>
+      <header className="px-4 md:px-12 py-4 md:py-5 flex items-center justify-between backdrop-blur-md border-b" style={{
+        background: "rgba(255,248,238,0.7)",
+        borderColor: "rgba(31,41,55,0.06)"
+      }}>
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-white font-medium text-sm md:text-base" style={{
+            background: "linear-gradient(135deg, #E87722, #F89537)",
+            boxShadow: "0 4px 12px rgba(232,119,34,0.25)"
+          }}>P</div>
+          <div className="text-lg md:text-xl font-medium" style={{ color: "#E87722", letterSpacing: "-0.3px" }}>padosti</div>
+        </div>
+        <div className="flex gap-3 md:gap-5 items-center text-sm">
+          <a href="#how-it-works" className="hidden md:inline text-charcoal/70 hover:text-charcoal">How it works</a>
+          <a href="#categories" className="hidden md:inline text-charcoal/70 hover:text-charcoal">Categories</a>
+          <a href="#join" className="text-white px-4 md:px-5 py-2 rounded-full text-xs md:text-sm" style={{
+            background: "#E87722",
+            boxShadow: "0 4px 12px rgba(232,119,34,0.3)"
+          }}>Join waitlist</a>
+        </div>
       </header>
 
-      {/* Hero */}
-      <section className="px-6 pt-12 pb-16 md:px-12 md:pt-20 text-center max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-6xl font-bold text-charcoal mb-6 leading-tight">
-          Where neighbours
-          <br />
-          become friends
-        </h2>
-        <p className="text-lg md:text-xl text-charcoal/80 mb-10 max-w-2xl mx-auto">
-          Rent household items, furniture, sports gear, party supplies and more
-          — from trusted neighbours within 10 miles. Borrow what you need,
-          share what you own.
+      {/* Hero Section */}
+      <section className="px-4 md:px-6 pt-8 md:pt-14 pb-4 md:pb-8 text-center relative">
+        <div className="inline-block backdrop-blur-md text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-4 md:mb-5 font-medium border" style={{
+          background: "rgba(255,255,255,0.75)",
+          color: "#0B6E6E",
+          borderColor: "rgba(11,110,110,0.15)"
+        }}>
+          🪔 Launching summer 2026 · Free to join
+        </div>
+
+        <h1 className="text-3xl md:text-5xl font-medium leading-tight mb-3 md:mb-4 text-charcoal" style={{ letterSpacing: "-0.8px" }}>
+          Borrow from neighbours.{" "}
+          <span style={{
+            background: "linear-gradient(135deg, #E87722, #F89537)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text"
+          }}>Share what you own.</span>
+        </h1>
+
+        <p className="text-sm md:text-lg text-charcoal/75 max-w-md md:max-w-xl mx-auto mb-5 md:mb-7 leading-relaxed px-2">
+          Everything you occasionally need is already on your street. <em>Borrowed, not bought.</em>
         </p>
 
-        {/* Email Signup Form */}
+        {/* Email Form */}
         <form
-          onSubmit={handleSubmit}
-          className="max-w-md mx-auto flex flex-col sm:flex-row gap-3"
+          onSubmit={(e) => handleSubmit(e, email, setEmail, setLoading, setMessage, setMessageType)}
+          className="flex gap-1.5 max-w-sm md:max-w-md mx-auto mb-3 p-1.5 rounded-2xl bg-white border"
+          style={{
+            boxShadow: "0 10px 30px rgba(31,41,55,0.08), 0 2px 6px rgba(31,41,55,0.05)",
+            borderColor: "rgba(31,41,55,0.06)"
+          }}
         >
           <input
             type="email"
@@ -82,145 +136,222 @@ export default function Home() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
-            className="flex-1 px-5 py-3 rounded-lg border-2 border-charcoal/20 focus:border-marigold focus:outline-none text-charcoal bg-white disabled:opacity-50"
+            className="flex-1 px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base bg-transparent outline-none text-charcoal disabled:opacity-50 min-w-0"
           />
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 bg-marigold text-white font-semibold rounded-lg hover:bg-marigold/90 transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+            className="text-white font-medium text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3 rounded-xl whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              background: "linear-gradient(135deg, #E87722, #F89537)",
+              boxShadow: "0 4px 12px rgba(232,119,34,0.3)"
+            }}
           >
-            {loading ? "Signing up..." : "Notify me at launch"}
+            {loading ? "..." : "Notify me"}
           </button>
         </form>
 
-        {/* Success/Error Message */}
         {message && (
-          <p
-            className={`mt-4 text-sm font-medium ${
-              messageType === "success" ? "text-teal" : "text-red-600"
-            }`}
-          >
+          <p className={`mt-3 text-sm font-medium ${messageType === "success" ? "text-teal" : "text-red-600"}`}>
             {message}
           </p>
         )}
 
-        <p className="mt-6 text-sm italic text-charcoal/60">
-          Pados (neighbour) + Dosti (friendship) = Padosti
+        <p className="text-xs text-charcoal/55 font-medium mt-2">
+          <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> = <span className="font-semibold">Padosti</span> — your neighbourhood, your people · No spam, ever
+        </p>
+
+        {/* Mobile scroll cue */}
+        <div className="md:hidden flex flex-col items-center gap-1 mt-4 mb-1 text-xs text-charcoal/55 font-medium">
+          <span>See what&apos;s possible</span>
+          <span className="text-lg animate-bounce" style={{ color: "#E87722" }}>↓</span>
+        </div>
+      </section>
+
+      {/* Rent / Share Section */}
+      <section className="px-4 md:px-6 relative -mb-8 z-10">
+        <div className="bg-white rounded-t-3xl px-5 md:px-12 pt-6 md:pt-10 pb-10 md:pb-14 border border-b-0 max-w-3xl mx-auto" style={{
+          boxShadow: "0 -10px 40px rgba(31,41,55,0.06)",
+          borderColor: "rgba(31,41,55,0.06)"
+        }}>
+          <div className="text-center mb-5 md:mb-7">
+            <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#E87722" }}>
+              ✨ Choose your vibe
+            </div>
+            <h2 className="text-xl md:text-3xl font-medium mt-1.5 md:mt-2" style={{ letterSpacing: "-0.5px" }}>
+              Rent it · Or share for free
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            {/* Rent Card */}
+            <div className="rounded-2xl p-4 md:p-6 border-2" style={{
+              borderColor: "#E87722",
+              background: "linear-gradient(135deg, rgba(232,119,34,0.06), rgba(248,149,55,0.03))"
+            }}>
+              <div className="flex md:block items-start gap-3">
+                <div className="text-3xl md:text-4xl mb-0 md:mb-2">💰</div>
+                <div>
+                  <div className="font-semibold text-base md:text-lg text-charcoal">Rent it</div>
+                  <div className="text-xs md:text-sm text-charcoal/70 mt-1 leading-relaxed">
+                    Earn extra income on things you rarely use.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Share Free Card */}
+            <div className="rounded-2xl p-4 md:p-6 border-2" style={{
+              borderColor: "#0B6E6E",
+              background: "linear-gradient(135deg, rgba(11,110,110,0.06), rgba(11,110,110,0.03))"
+            }}>
+              <div className="flex md:block items-start gap-3">
+                <div className="text-3xl md:text-4xl mb-0 md:mb-2">🤝</div>
+                <div>
+                  <div className="font-semibold text-base md:text-lg text-charcoal">Share for free</div>
+                  <div className="text-xs md:text-sm text-charcoal/70 mt-1 leading-relaxed">
+                    Community kindness — because what&apos;s mine is yours.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories Section - Icon Grid */}
+      <section id="categories" className="px-4 md:px-6 py-10 md:py-14 pt-14 md:pt-20" style={{
+        background: "linear-gradient(180deg, white 0%, #FFF8EE 100%)"
+      }}>
+        <div className="text-center mb-6 md:mb-8 max-w-6xl mx-auto">
+          <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#E87722" }}>
+            📦 What neighbours share
+          </div>
+          <h2 className="text-xl md:text-3xl font-medium mt-1.5 md:mt-2" style={{ letterSpacing: "-0.5px" }}>
+            From everyday to once-a-year
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto">
+          <CategoryTile icon="🍳" title="Kitchen" />
+          <CategoryTile icon="🛠️" title="Tools" />
+          <CategoryTile icon="📚" title="Education" />
+          <CategoryTile icon="🛋️" title="Furniture" />
+          <CategoryTile icon="🎉" title="Events" />
+          <CategoryTile icon="⚽" title="Sports" />
+          <CategoryTile icon="👶" title="Kids" />
+          <CategoryTile icon="🪔" title="Pooja" />
+          <CategoryTile icon="✈️" title="Travel" />
+        </div>
+
+        <p className="text-center text-xs md:text-sm text-charcoal/55 mt-5 md:mt-7 max-w-2xl mx-auto px-4">
+          From Instant Pots to mandap setups · pressure cookers to telescopes · 100s of items
         </p>
       </section>
 
-      {/* What You Can Rent */}
-      <section className="px-6 py-16 md:px-12 max-w-6xl mx-auto">
-        <h3 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-12">
-          What you can rent
-        </h3>
+      {/* How It Works Section */}
+      <section id="how-it-works" className="px-4 md:px-6 py-10 md:py-14 text-white" style={{
+        background: "linear-gradient(135deg, #0B6E6E 0%, #084848 100%)"
+      }}>
+        <div className="text-center mb-6 md:mb-10 max-w-5xl mx-auto">
+          <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.6)" }}>
+            🔄 How it works
+          </div>
+          <h2 className="text-xl md:text-3xl font-medium mt-1.5 md:mt-2 text-white" style={{ letterSpacing: "-0.5px" }}>
+            Three steps. Done.
+          </h2>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <CategoryCard
-            icon="🏠"
-            title="Household Essentials"
-            description="Power tools, appliances, kitchen gadgets, cleaning equipment"
-          />
-          <CategoryCard
-            icon="🛋️"
-            title="Furniture"
-            description="Folding chairs, tables, extra beds, party setups"
-          />
-          <CategoryCard
-            icon="⚽"
-            title="Sports & Outdoor"
-            description="Camping gear, bicycles, sports equipment, BBQ grills"
-          />
-          <CategoryCard
-            icon="🎉"
-            title="Events & Parties"
-            description="Decorations, sound systems, catering equipment, lighting"
-          />
-          <CategoryCard
-            icon="👶"
-            title="Kids & Baby"
-            description="Strollers, car seats, toys, party supplies"
-          />
-          <CategoryCard
-            icon="🪔"
-            title="Cultural & Festive"
-            description="Pooja items, biryani handis, Diwali decor, traditional wear"
-          />
+        <div className="grid grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto">
+          <StepCard icon="🔍" title="Find" description="Browse items within 10 miles" />
+          <StepCard icon="💬" title="Connect" description="Message owner, arrange pickup" />
+          <StepCard icon="🤝" title="Borrow" description="Use, return, leave a review" />
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="px-6 py-16 md:px-12 bg-teal/5 max-w-6xl mx-auto rounded-3xl my-12">
-        <h3 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-12">
-          How Padosti works
+      {/* Second Email Form */}
+      <section id="join" className="px-4 md:px-6 py-7 md:py-10 text-center" style={{
+        background: "linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 100%)"
+      }}>
+        <h3 className="text-lg md:text-2xl font-medium mb-2" style={{ letterSpacing: "-0.5px" }}>
+          Be there when we launch
         </h3>
+        <p className="text-xs md:text-sm text-charcoal/70 mb-4">
+          Get first-in-neighbourhood access before public launch.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <StepCard
-            number="1"
-            icon="🔍"
-            title="Browse"
-            description="Find items from neighbours within 10 miles"
+        <form
+          onSubmit={(e) => handleSubmit(e, email2, setEmail2, setLoading2, setMessage2, setMessageType2)}
+          className="flex gap-1.5 max-w-sm mx-auto p-1.5 rounded-2xl bg-white border"
+          style={{
+            boxShadow: "0 10px 30px rgba(31,41,55,0.08)",
+            borderColor: "rgba(31,41,55,0.06)"
+          }}
+        >
+          <input
+            type="email"
+            placeholder="your@email.com"
+            value={email2}
+            onChange={(e) => setEmail2(e.target.value)}
+            disabled={loading2}
+            className="flex-1 px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base bg-transparent outline-none text-charcoal disabled:opacity-50 min-w-0"
           />
-          <StepCard
-            number="2"
-            icon="💬"
-            title="Connect"
-            description="Message the owner, agree on pickup"
-          />
-          <StepCard
-            number="3"
-            icon="🤝"
-            title="Borrow"
-            description="Pay safely, use, return, leave a review"
-          />
-        </div>
+          <button
+            type="submit"
+            disabled={loading2}
+            className="text-white font-medium text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3 rounded-xl whitespace-nowrap disabled:opacity-50"
+            style={{
+              background: "linear-gradient(135deg, #E87722, #F89537)",
+              boxShadow: "0 4px 12px rgba(232,119,34,0.3)"
+            }}
+          >
+            {loading2 ? "..." : "Join"}
+          </button>
+        </form>
+
+        {message2 && (
+          <p className={`mt-3 text-sm font-medium ${messageType2 === "success" ? "text-teal" : "text-red-600"}`}>
+            {message2}
+          </p>
+        )}
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-12 md:px-12 text-center text-charcoal/60 text-sm">
-        <p>A trusted rental community for your neighbourhood</p>
-        <p className="mt-2">Launching Summer 2026 · padosti.com</p>
+      <footer className="px-4 md:px-6 py-5 text-center text-xs text-charcoal/50 bg-white border-t" style={{
+        borderColor: "rgba(31,41,55,0.08)"
+      }}>
+        🪔 padosti.com · <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> · Where neighbours become friends
       </footer>
     </main>
   );
 }
 
-function CategoryCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: string;
-  title: string;
-  description: string;
-}) {
+function CategoryTile({ icon, title }: { icon: string; title: string }) {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-charcoal/10 hover:border-marigold/40 hover:shadow-lg transition">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h4 className="text-xl font-bold text-charcoal mb-2">{title}</h4>
-      <p className="text-charcoal/70 text-sm">{description}</p>
+    <div className="rounded-2xl bg-white p-3 md:p-5 border text-center hover:shadow-md transition-shadow cursor-default" style={{
+      borderColor: "rgba(31,41,55,0.06)",
+      boxShadow: "0 2px 8px rgba(31,41,55,0.03)"
+    }}>
+      <div className="text-3xl md:text-4xl mb-1.5 md:mb-2">{icon}</div>
+      <div className="font-semibold text-xs md:text-sm text-charcoal">{title}</div>
     </div>
   );
 }
 
-function StepCard({
-  number,
-  icon,
-  title,
-  description,
-}: {
-  number: string;
-  icon: string;
-  title: string;
-  description: string;
-}) {
+function StepCard({ icon, title, description }: { icon: string; title: string; description: string }) {
   return (
     <div className="text-center">
-      <div className="text-5xl mb-4">{icon}</div>
-      <div className="text-marigold font-bold mb-2">Step {number}</div>
-      <h4 className="text-xl font-bold text-charcoal mb-2">{title}</h4>
-      <p className="text-charcoal/70">{description}</p>
+      <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full mb-2 md:mb-3 text-xl md:text-2xl border" style={{
+        background: "linear-gradient(135deg, rgba(232,119,34,0.3), rgba(248,149,55,0.18))",
+        borderColor: "rgba(232,119,34,0.35)",
+        color: "#F89537"
+      }}>
+        {icon}
+      </div>
+      <div className="font-semibold text-xs md:text-base mb-0.5 md:mb-1 text-white">{title}</div>
+      <div className="text-[10px] md:text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.7)" }}>
+        {description}
+      </div>
     </div>
   );
 }
