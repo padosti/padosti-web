@@ -62,12 +62,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative overflow-hidden">
-      {/* Background gradient layer - only behind hero */}
       <div className="absolute top-0 left-0 right-0 h-[600px] -z-10" style={{
         background: "radial-gradient(ellipse at top left, rgba(232,119,34,0.14), transparent 50%), radial-gradient(ellipse at bottom right, rgba(11,110,110,0.10), transparent 50%), linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 100%)"
       }}></div>
 
-      {/* Floating orbs - decorative */}
       <div className="absolute top-16 -right-12 w-48 h-48 rounded-full -z-10" style={{
         background: "radial-gradient(circle, rgba(232,119,34,0.18), transparent 70%)"
       }}></div>
@@ -90,6 +88,7 @@ export default function Home() {
         <div className="flex gap-3 md:gap-5 items-center text-sm">
           <a href="#how-it-works" className="hidden md:inline text-charcoal/70 hover:text-charcoal">How it works</a>
           <a href="#categories" className="hidden md:inline text-charcoal/70 hover:text-charcoal">Categories</a>
+          <a href="#trust" className="hidden md:inline text-charcoal/70 hover:text-charcoal">Privacy</a>
           <a href="#join" className="text-white px-4 md:px-5 py-2 rounded-full text-xs md:text-sm" style={{
             background: "#E87722",
             boxShadow: "0 4px 12px rgba(232,119,34,0.3)"
@@ -98,7 +97,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 md:px-6 pt-8 md:pt-14 pb-6 md:pb-10 text-center relative">
+      <section className="px-4 md:px-6 pt-8 md:pt-14 pb-4 md:pb-8 text-center relative">
         <div className="inline-block backdrop-blur-md text-xs px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-4 md:mb-5 font-medium border" style={{
           background: "rgba(255,255,255,0.75)",
           color: "#0B6E6E",
@@ -121,7 +120,6 @@ export default function Home() {
           Everything you occasionally need is already on your street. <em>Borrowed, not bought.</em>
         </p>
 
-        {/* Email Form */}
         <form
           onSubmit={(e) => handleSubmit(e, email, setEmail, setLoading, setMessage, setMessageType)}
           className="flex gap-1.5 max-w-sm md:max-w-md mx-auto mb-3 p-1.5 rounded-2xl bg-white border"
@@ -158,18 +156,18 @@ export default function Home() {
           </p>
         )}
 
+        {/* Updated tagline with stronger privacy signal */}
         <p className="text-xs text-charcoal/55 font-medium mt-2">
-          <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> = <span className="font-semibold">Padosti</span> — your neighbourhood, your people · No spam, ever
+          <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> = <span className="font-semibold">Padosti</span> · Your privacy comes first — email never sold, never shared.
         </p>
 
-        {/* Mobile scroll cue */}
         <div className="md:hidden flex flex-col items-center gap-1 mt-4 mb-1 text-xs text-charcoal/55 font-medium">
           <span>See what&apos;s possible</span>
           <span className="text-lg animate-bounce" style={{ color: "#E87722" }}>↓</span>
         </div>
       </section>
 
-      {/* Rent / Share Section - WHITE SPOTLIGHT */}
+      {/* Rent / Share Section */}
       <section className="px-4 md:px-6 py-10 md:py-14 bg-white relative" style={{
         boxShadow: "0 -4px 20px rgba(31,41,55,0.04)",
         borderTop: "1px solid rgba(31,41,55,0.06)"
@@ -185,7 +183,6 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-            {/* Rent Card */}
             <div className="rounded-2xl p-4 md:p-6 border-2" style={{
               borderColor: "#E87722",
               background: "linear-gradient(135deg, rgba(232,119,34,0.06), rgba(248,149,55,0.03))"
@@ -201,7 +198,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Share Free Card */}
             <div className="rounded-2xl p-4 md:p-6 border-2" style={{
               borderColor: "#0B6E6E",
               background: "linear-gradient(135deg, rgba(11,110,110,0.06), rgba(11,110,110,0.03))"
@@ -229,7 +225,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Categories Section - PEACH BACKGROUND */}
+      {/* Categories Section */}
       <section id="categories" className="px-4 md:px-6 py-10 md:py-14" style={{
         background: "linear-gradient(180deg, #FFF1DC 0%, #FFEDD8 100%)",
         borderTop: "1px solid rgba(31,41,55,0.06)"
@@ -280,8 +276,50 @@ export default function Home() {
         </div>
       </section>
 
+      {/* NEW: Built on Trust Section */}
+      <section id="trust" className="px-4 md:px-6 py-10 md:py-14 bg-white relative" style={{
+        borderTop: "1px solid rgba(31,41,55,0.06)"
+      }}>
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-6 md:mb-8">
+            <div className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#E87722" }}>
+              🔒 Built on trust
+            </div>
+            <h2 className="text-2xl md:text-3xl font-medium mt-2" style={{ letterSpacing: "-0.5px" }}>
+              Privacy-first, by design
+            </h2>
+            <p className="text-xs md:text-sm text-charcoal/65 mt-2 md:mt-3 max-w-lg mx-auto leading-relaxed">
+              Padosti is built for community trust. Here&apos;s what that means for you:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <TrustCard
+              icon="🪪"
+              title="Minimal profiles"
+              description={<>First name + verified neighbourhood. <strong style={{ color: "#B85614" }}>No</strong> last names, <strong style={{ color: "#B85614" }}>No</strong> phones, <strong style={{ color: "#B85614" }}>No</strong> home addresses.</>}
+            />
+            <TrustCard
+              icon="💬"
+              title="In-app messaging only"
+              description="Your phone number stays private. Connect through Padosti — never share contact info."
+            />
+            <TrustCard
+              icon="🏘️"
+              title="Verified neighbours"
+              description="Real people, within 10 miles only. Community-first verification before you connect."
+            />
+            <TrustCard
+              icon="📧"
+              title="Your email stays yours"
+              description="Never sold. Never shared. Full account deletion always available."
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Second Email Form */}
-      <section id="join" className="px-4 md:px-6 py-8 md:py-10 text-center" style={{
+      <section id="join" className="px-4 md:px-6 py-7 md:py-10 text-center" style={{
         background: "linear-gradient(180deg, #FFF8EE 0%, #FFEDD8 100%)"
       }}>
         <h3 className="text-lg md:text-2xl font-medium mb-2" style={{ letterSpacing: "-0.5px" }}>
@@ -326,6 +364,11 @@ export default function Home() {
             {message2}
           </p>
         )}
+
+        {/* NEW: Privacy microcopy under form */}
+        <p className="text-xs text-charcoal/65 mt-4 max-w-xs mx-auto leading-relaxed">
+          🔒 <strong className="text-charcoal/85">Privacy-first:</strong> we collect only your email. Never sold, never shared.
+        </p>
       </section>
 
       {/* Footer */}
@@ -363,6 +406,21 @@ function StepCard({ icon, title, description }: { icon: string; title: string; d
       <div className="font-semibold text-xs md:text-base mb-0.5 md:mb-1 text-white">{title}</div>
       <div className="text-[10px] md:text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.7)" }}>
         {description}
+      </div>
+    </div>
+  );
+}
+
+function TrustCard({ icon, title, description }: { icon: string; title: string; description: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl p-3.5 md:p-4 border flex gap-3 items-start" style={{
+      background: "#FFF8EE",
+      borderColor: "rgba(31,41,55,0.06)"
+    }}>
+      <div className="text-2xl md:text-3xl flex-shrink-0">{icon}</div>
+      <div>
+        <div className="font-semibold text-sm md:text-base text-charcoal mb-1">{title}</div>
+        <div className="text-xs md:text-sm text-charcoal/70 leading-relaxed">{description}</div>
       </div>
     </div>
   );
