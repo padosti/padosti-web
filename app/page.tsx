@@ -103,7 +103,7 @@ export default function Home() {
           color: "#0B6E6E",
           borderColor: "rgba(11,110,110,0.15)"
         }}>
-          🪔 First neighbours getting access now · Free to join
+          ✨ First neighbours getting access now · Free to join
         </div>
 
         <h1 className="text-3xl md:text-5xl font-medium leading-tight mb-3 md:mb-4 text-charcoal" style={{ letterSpacing: "-0.8px" }}>
@@ -156,7 +156,6 @@ export default function Home() {
           </p>
         )}
 
-        {/* Updated tagline with stronger privacy signal */}
         <p className="text-xs text-charcoal/55 font-medium mt-2">
           <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> = <span className="font-semibold">Padosti</span> · Your privacy comes first — email never sold, never shared.
         </p>
@@ -220,7 +219,7 @@ export default function Home() {
       <div className="bg-white py-5 md:py-6 flex items-center justify-center">
         <div className="inline-flex items-center gap-3 text-charcoal/30">
           <span className="w-8 h-px bg-charcoal/15"></span>
-          <span className="text-base">🪔</span>
+          <span className="text-base">✨</span>
           <span className="w-8 h-px bg-charcoal/15"></span>
         </div>
       </div>
@@ -247,7 +246,7 @@ export default function Home() {
           <CategoryTile icon="🎉" title="Events" />
           <CategoryTile icon="⚽" title="Sports" />
           <CategoryTile icon="👶" title="Kids" />
-          <CategoryTile icon="🪔" title="Pooja" />
+          <CategoryTile icon="🕯️" title="Cultural" />
           <CategoryTile icon="✈️" title="Travel" />
         </div>
 
@@ -276,7 +275,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW: Built on Trust Section */}
+      {/* Built on Trust Section */}
       <section id="trust" className="px-4 md:px-6 py-10 md:py-14 bg-white relative" style={{
         borderTop: "1px solid rgba(31,41,55,0.06)"
       }}>
@@ -365,7 +364,6 @@ export default function Home() {
           </p>
         )}
 
-        {/* NEW: Privacy microcopy under form */}
         <p className="text-xs text-charcoal/65 mt-4 max-w-xs mx-auto leading-relaxed">
           🔒 <strong className="text-charcoal/85">Privacy-first:</strong> we collect only your email. Never sold, never shared.
         </p>
@@ -375,7 +373,7 @@ export default function Home() {
       <footer className="px-4 md:px-6 py-5 text-center text-xs text-charcoal/50 bg-white border-t" style={{
         borderColor: "rgba(31,41,55,0.08)"
       }}>
-        🪔 padosti.com · <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> · Where neighbours become friends
+        ✨ padosti.com · <span style={{ color: "#E87722" }}>Pados</span> + <span style={{ color: "#0B6E6E" }}>Dosti</span> · Where neighbours become friends
       </footer>
     </main>
   );
