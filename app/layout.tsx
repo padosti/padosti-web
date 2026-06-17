@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Padosti — Where neighbours become friends",
-  description:
-    "Rent household items, furniture, sports gear, and more from trusted neighbours within 10 miles. Borrow what you need, share what you own.",
+  description: "..."
 };
 
 export default function RootLayout({
